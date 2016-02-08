@@ -310,7 +310,7 @@
 
         Fn.prototype = (function () {
             function generateFn() {
-                this.func(true);
+                return this.func(true);
             }
 
             function cleanUp() {
@@ -318,7 +318,7 @@
             }
 
             function rollback(){
-                this.func(false);
+                return this.func(false);
             }
             return {
                 generate: generateFn,
@@ -515,8 +515,15 @@
 
                 function generateStep() {
                     var currentStep = steps[currentStepCount];
-                    currentStep.generate();
-                    if (currentStep.type === "location_change" ||
+                    promise = currentStep.generate();
+
+                    if(isObject(promise) && isFunction(promise.then)) {
+                        promise.then(function(){
+                            goToNext();
+                        })
+                    }
+
+                    else if (currentStep.type === "location_change" ||
                         currentStep.type === "function") {
                         waitForAngular(function () {
                             goToNext();
