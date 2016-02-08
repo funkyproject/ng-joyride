@@ -517,7 +517,7 @@
                     var currentStep = steps[currentStepCount];
                     promise = currentStep.generate();
 
-                    if(isObject(promise) && isFunction(promise.then)) {
+                    if(promise instanceof Object && promise.then instanceof Function) {
                         promise.then(function(){
                             goToNext();
                         })
