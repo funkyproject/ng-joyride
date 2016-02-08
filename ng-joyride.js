@@ -233,9 +233,9 @@
             this.scope = scope;
             this.type = "title";
             this.next = config.next || true;
-            this.nextText = $sce.trustAsHtml(config.nextText || 'Next');
+            this.nextText = config.nextText || 'Next';
             this.previous = config.previous || true;
-            this.previousText = $sce.trustAsHtml(config.previousText || 'Previous');
+            this.previousText = config.previousText || 'Previous';
             this.curtainClass = curtainClass;
             this.addClassToCurtain = addClassToCurtain;
             this.shouldDisablePrevious = shouldDisablePrevious;
@@ -521,7 +521,7 @@
                     var currentStep = steps[currentStepCount];
                     promise = currentStep.generate();
 
-                    if(promise instanceof Object && promise.then instanceof Function) {
+                    if(currentStep.type === "function" && promise instanceof Object && promise.then instanceof Function) {
                         promise.then(function(){
                             goToNext();
                         })
