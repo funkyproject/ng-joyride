@@ -232,6 +232,10 @@
             this.goToPrevFn = goToPrevFn;
             this.scope = scope;
             this.type = "title";
+            this.next = config.next || true;
+            this.nextText = $sce.trustAsHtml(config.nextText || 'Next');
+            this.previous = config.previous || true;
+            this.previousText = $sce.trustAsHtml(config.previousText || 'Previous');
             this.curtainClass = curtainClass;
             this.addClassToCurtain = addClassToCurtain;
             this.shouldDisablePrevious = shouldDisablePrevious;
@@ -256,9 +260,9 @@
                 this.scope.content = this.content;
                 $fkEl.html($compile(html)(this.scope));
                 if (this.hasReachedEndFn()) {
-                    $('.nextBtn').text("Finish");
+                    $('.nextBtn').text(this.nextText);
                 } else {
-                    $('.nextBtn').html("Next&nbsp;<i class='glyphicon glyphicon-chevron-right'>");
+                    $('.nextBtn').html(this.nextText);
                 }
                 $fkEl.slideDown(100, function () {
                     $('.nextBtn').one("click",function(){ self.goToNextFn(200);});
